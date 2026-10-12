@@ -116,5 +116,5 @@ Unity 2022.3 / VRChat SDK3 Worlds / UdonSharp。PC と Meta Quest の両対応�
 
 ## 権利表記
 
-- 本リポジトリの内容：© 2026 <!-- TODO: 名前 -->. All rights reserved.（閲覧目的での公開です）
+- 本リポジトリの内容：© 2026 Chevy Dyson B. Jungaya. All rights reserved.（閲覧目的での公開です）
 - 麻雀ロジック本体「青空麻雀」の著作権はスズ製作所に帰属します（本リポジトリには含みません）
