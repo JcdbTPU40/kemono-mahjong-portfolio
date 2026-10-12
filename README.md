@@ -1,7 +1,7 @@
 # 超能力ケモノ麻雀 — VRChat 多人数麻雀ワールド
 
 > 🎬 **プレイ動画（1分20秒）**：https://youtu.be/-x2Sj6T6zls
-<!-- > 📄 **企画・仕様のポートフォリオ資料（PDF）**：（ここにリンク） -->
+> 📄 **企画・仕様のポートフォリオ資料（PDF・16ページ）**：[docs/kemono-mahjong-portfolio.pdf](docs/kemono-mahjong-portfolio.pdf)
 > 🌐 **ワールド**：「麻雀集会所 β」VRChat にてパブリック公開中（PC / Quest 対応・8卓・最大50人）
 
 ![ワールドのサムネイル](docs/images/ThumbnailWorld1.png)
