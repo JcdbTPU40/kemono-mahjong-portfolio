@@ -1,15 +1,18 @@
-# 超能力ケモノ麻雀 — VRChat 多人数麻雀ワールド（自作コード抜粋）
+# 超能力ケモノ麻雀 — VRChat 多人数麻雀ワールド
 
 > 🎬 **プレイ動画**：（ここに YouTube 等のリンク）
 > 🌐 **ワールド**：「麻雀集会所 β」VRChat にてパブリック公開中（PC / Quest 対応・8卓・最大50人）
 
-![screenshot](docs/images/hero.png) <!-- TODO: スクリーンショットを置く -->
+![ワールドのサムネイル](docs/images/ThumbnailWorld1.png)
+
+![ポスター](docs/images/PosterLast.png)
 
 VRChat 上で最大50人が同時に遊べる、雀魂（じゃんたま）準拠ルールの段位戦麻雀ワールドです。
 麻雀の進行ロジックは市販アセット「青空麻雀」（スズ製作所）をベースに改造し、
-その上に **マッチング・段位システム・演出・観戦中継・VR 操作・多言語対応** などを自作で積み上げています。
+その上に **マッチング・段位システム・演出・観戦中継・VR 操作・多言語対応** などを新たに開発しました。
+開発は **AI エージェント（Claude Code）に実装を任せ、本人は企画・仕様・判断・検証を担う体制** で行っています（詳細は「担当範囲」）。
 
-このリポジトリには **自分で一から書いたコードだけ** を収録しています（Udon 実行時コード 54 ファイル／約4.2万行、Unity Editor 拡張 76 ファイル／約4.7万行）。
+このリポジトリには **本プロジェクトで新規に作ったコードだけ**（青空麻雀に由来しないもの）を収録しています（Udon 実行時コード 54 ファイル／約4.2万行、Unity Editor 拡張 76 ファイル／約4.7万行）。
 
 ## このリポジトリについて（重要）
 
@@ -17,7 +20,7 @@ VRChat 上で最大50人が同時に遊べる、雀魂（じゃんたま）準�
   そのため本リポジトリ単体ではコンパイルできません。コードを読んでいただくための抜粋です。
 - 本体に加えた改修（同期まわりの不具合修正など）は、コードではなく下記「技術的な見どころ」で文章として説明しています。
 - アート・サウンド・シェーダー等の購入アセットも同梱していません。
-- 自作スクリプトも本体と同じ名前空間 `SuzuFactory.AozoraMahjong` に置いています（本体の型を直接参照するため）。
+- 新規スクリプトも本体と同じ名前空間 `SuzuFactory.AozoraMahjong` に置いています（本体の型を直接参照するため）。
 - 公開にあたり、スタッフの表示名などの個人情報は `<STAFF_NAME_1>` のような伏せ字に置き換えています。
 
 ## 技術スタック
@@ -29,25 +32,33 @@ VRChat 上で最大50人が同時に遊べる、雀魂（じゃんたま）準�
 
 ## 担当範囲
 
-企画・仕様設計・実装・実機検証・運用（イベント開催）まで個人で担当。
+本作は **AI エージェント（Claude Code）に実装を全面的に任せる体制** で開発しています。
+本人はコードを書いておらず、IDE も使っていません。
 
-- 設計・仕様の判断、不具合の原因調査、実機での検証は本人
-- 実装の一部で AI コーディング支援（Claude Code）を使用 <!-- TODO: 実態に合わせて書き直す -->
+| 本人 | AI（Claude Code） |
+|---|---|
+| 企画・ゲーム仕様の決定（ルール、段位制度、演出の段取りなど） | コードの実装・修正 |
+| 優先順位とスコープの判断、仕様の取捨選択 | Unity Editor の操作（MCP 経由） |
+| 実機（PC / Quest / VR）でのテストと不具合の報告 | 不具合のコード上の原因調査 |
+| 開発ルールや知見の文書化、AI への指示の設計 | Editor ツールの作成 |
+| ワールドの公開・運用・イベント開催 | |
+
+<!-- TODO: 表の分担が実態と合っているか確認する -->
 
 ## 主な機能と対応ファイル
 
-| 機能 | 主なファイル |
-|---|---|
-| 段位戦マッチング（4本の待機列・空卓割当・タイムアウト・途中退出のCPU代打） | `Runtime/MatchmakingManager.cs` |
-| フリー対局（部屋＝卓の予約・ルール設定・同じ面子で続行） | `Runtime/MatchmakingManager.cs`, `Runtime/MainMenuController.cs` |
-| 段位・戦績・分析（PlayerData に保存、同期変数ゼロ） | `Runtime/PlayerStatsStore.cs`, `Runtime/InstanceRankingBoard.cs` |
-| 観戦中継（Mリーグ式の自動カメラディレクター） | `Runtime/SpectatorMonitor.cs` |
-| 和了・役満・鳴きなどの演出 | `Runtime/MahjongAgariEffect.cs`, `Runtime/MahjongYakumanCutin.cs`, `Runtime/MahjongCallEffect.cs` |
-| VR で牌を掴んで打牌 | `Runtime/MahjongTileGrab.cs` |
-| 卓の近接カリング（Quest 負荷対策） | `Runtime/TableProximityCuller.cs` |
-| 5言語対応（日・英・韓・中簡・中繁） | `Editor/BuildLanguage.cs`, `Editor/KoreanText.cs`, `Editor/ChineseText.cs` |
-| シーン構築・配線・検証の自動化ツール群 | `Editor/Build*.cs`, `Editor/Wire*.cs`, `Editor/Validate*.cs` |
-| 音量の自動正規化（実測 LUFS から算出） | `Editor/KemonoAudioNormalizer.cs` |
+| 機能                                      | 主なファイル                                                                                            |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| 段位戦マッチング（4本の待機列・空卓割当・タイムアウト・途中退出のCPU代打） | `Runtime/MatchmakingManager.cs`                                                                   |
+| フリー対局（部屋＝卓の予約・ルール設定・同じ面子で続行）            | `Runtime/MatchmakingManager.cs`, `Runtime/MainMenuController.cs`                                  |
+| 段位・戦績・分析（PlayerData に保存、同期変数ゼロ）         | `Runtime/PlayerStatsStore.cs`, `Runtime/InstanceRankingBoard.cs`                                  |
+| 観戦中継（Mリーグ式の自動カメラディレクター）                 | `Runtime/SpectatorMonitor.cs`                                                                     |
+| 和了・役満・鳴きなどの演出                           | `Runtime/MahjongAgariEffect.cs`, `Runtime/MahjongYakumanCutin.cs`, `Runtime/MahjongCallEffect.cs` |
+| VR で牌を掴んで打牌                             | `Runtime/MahjongTileGrab.cs`                                                                      |
+| 卓の近接カリング（Quest 負荷対策）                    | `Runtime/TableProximityCuller.cs`                                                                 |
+| 5言語対応（日・英・韓・中簡・中繁）                      | `Editor/BuildLanguage.cs`, `Editor/KoreanText.cs`, `Editor/ChineseText.cs`                        |
+| シーン構築・配線・検証の自動化ツール群                     | `Editor/Build*.cs`, `Editor/Wire*.cs`, `Editor/Validate*.cs`                                      |
+| 音量の自動正規化（実測 LUFS から算出）                  | `Editor/KemonoAudioNormalizer.cs`                                                                 |
 
 ## 技術的な見どころ
 
